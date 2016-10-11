@@ -10,7 +10,9 @@ def random_in_unit_disk():
       return p
 
 class Camera:
-  def __init__(self,lookfrom,lookat,vup,vfov,aspect,aperture,focus_dist):
+  def __init__(self,lookfrom,lookat,vup,vfov,aspect,aperture,focus_dist,t0,t1):
+    self.time0 = t0
+    self.time1 = t1
     self.lens_radius = aperture /2
     theta = vfov * math.pi/180
     half_height = math.tan(theta/2)
@@ -26,4 +28,5 @@ class Camera:
   def get_ray(self,s,t):
     rd = self.lens_radius * random_in_unit_disk()
     offset = self.u*rd.x + self.v*rd.y
-    return Ray(self.origin + offset,self.lower_left_corner + s*self.horizontal + t*self.vertical -self.origin -offset)
+    time = self.time0 + random()*(self.time1 - self.time0)
+    return Ray(self.origin + offset,self.lower_left_corner + s*self.horizontal + t*self.vertical -self.origin -offset,time)

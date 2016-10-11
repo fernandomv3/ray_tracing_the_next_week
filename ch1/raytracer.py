@@ -5,6 +5,7 @@ from ray import Ray
 from math import sqrt
 from random import random
 from hitable import Sphere
+from hitable import MovingSphere
 from hitable import HitableList
 from camera import Camera
 from material import Lambertian
@@ -35,7 +36,7 @@ def random_scene():
       center = Vec3(a+0.9*random(),0.2,b+0.9*random())
       if (center -Vec3(4,0.2,0)).length() > 0.9:
         if choose_mat < 0.8: #diffuse
-          l.append(Sphere(center,0.2,Lambertian(Vec3(random()*random(),random()*random(),random()*random()))))
+          l.append(MovingSphere(center,center+Vec3(0.0,0.5*random(),0.0),0.0,1.0,0.2,Lambertian(Vec3(random()*random(),random()*random(),random()*random()))))
         elif choose_mat < 0.95: #metal
           l.append(Sphere(center,0.2,Metal(Vec3(0.5*(1+random()),0.5*(1+random()),0.5*(1+random())),0.5*random())))
         else: #glass
@@ -47,16 +48,16 @@ def random_scene():
 def main():
   nx = 200
   ny = 150
-  ns = 100
+  ns = 50
   print ("P3\n",nx," ",ny,"\n255")
 
   world = random_scene()
 
-  lookfrom = Vec3(15,2,5)
+  lookfrom = Vec3(13,2,3)
   lookat = Vec3(0,0,0)
-  dist_to_focus = (lookfrom-lookat).length()
-  aperture = 0.1
-  cam = Camera(lookfrom,lookat,Vec3(0,1,0),20,nx/ny,aperture,dist_to_focus)
+  dist_to_focus = 10.0
+  aperture = 0.0
+  cam = Camera(lookfrom,lookat,Vec3(0,1,0),20,nx/ny,aperture,dist_to_focus,0.0,1.0)
   for j in reversed(range(ny)):
     for i in range(nx):
       col = Vec3(0,0,0)
