@@ -48,7 +48,7 @@ def random_scene():
 def main():
   nx = 200
   ny = 150
-  ns = 50
+  ns = 100
   print ("P3\n",nx," ",ny,"\n255")
 
   world = random_scene()

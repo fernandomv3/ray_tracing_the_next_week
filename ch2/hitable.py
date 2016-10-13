@@ -1,7 +1,10 @@
+from __future__ import print_function
 from vec3 import Vec3
 from math import sqrt
 from material import Material
 from aabb import Aabb
+from random import randint
+import sys
 
 class Hitable:
   def hit(self,r,t_min,t_max):
@@ -95,18 +98,58 @@ def surrounding_box(box0,box1):
     )
   return Aabb(small,big)
 
+def compareX(hitable):
+  box = hitable.bounding_box(0,0)
+  if box is None:
+    print("no bounding box in BvhNode constructor", file=sys.stderr) 
+  return box.min[0]
+
+def compareY(hitable):
+  box = hitable.bounding_box(0,0)
+  if box is None:
+    print("no bounding box in BvhNode constructor", file=sys.stderr) 
+  return box.min[1]
+
+def compareZ(hitable):
+  box = hitable.bounding_box(0,0)
+  if box is None:
+    print("no bounding box in BvhNode constructor", file=sys.stderr) 
+  return box.min[2]
+
 class BvhNode(Hitable):
   def __init__(self,l,time0,time1):
-    pass
+    axis = randint(0,2)
+    if axis == 0:
+      l = sorted(l,key= compareX)
+    elif axis == 1:
+      l = sorted(l,key= compareY)
+    else:
+      l = sorted(l,key= compareZ)
+    n = len(l)
+    if n == 1:
+      self.left = l
+      self.right = l
+    elif n == 2:
+      self.left = l[0]
+      self.right = l[1]
+    else:
+      self.left = BvhNode(l[:n//2+1],time0,time1)
+      self.right = BvhNode(l[n//2:],time0,time1)
 
-  def bounding_box(self):
+    box_left = self.left.bounding_box(time0,time1)
+    box_right = self.right.bounding_box(time0,time1)
+    if (box_left is None) or (box_right is None):
+      print("no bounding box in BvhNode constructor", file=sys.stderr)
+    self.box = surrounding_box(box_left,box_right)
+
+  def bounding_box(self,t0,t1):
     return self.box
 
   def hit(self,r,t_min,t_max):
     if self.box.hit(r,t_min,t_max):
       left_rec = self.left.hit(r,t_min,t_max)
       right_rec = self.right.hit(r,t_min,t_max)
-      if(left_rec is not None && right_rec is not None):
+      if((left_rec is not None) and (right_rec is not None)):
         if left_rec["t"] < right_rec["t"]:
           return left_rec
         else:
