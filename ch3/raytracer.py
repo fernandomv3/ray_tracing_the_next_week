@@ -48,13 +48,21 @@ def random_scene():
   l.append(Sphere(Vec3(-4,1,0),1.0,Lambertian(ConstantTexture(Vec3(0.4,0.2,0.1)))))
   l.append(Sphere(Vec3(4,1,0),1.0,Metal(Vec3(0.7,0.6,0.5),0.0)))
   return HitableList(l)
+
+def two_spheres():
+  l = []
+  checker = CheckerTexture(ConstantTexture(Vec3(0.2,0.3,0.1)),ConstantTexture(Vec3(0.9,0.9,0.9)))
+  l.append(Sphere(Vec3(0.0,-10.0,0.0),10,Lambertian(checker)))
+  l.append(Sphere(Vec3(0.0, 10.0,0.0),10,Lambertian(checker)))
+  return HitableList(l)
+
 def main():
   nx = 200
   ny = 150
   ns = 100
   print ("P3\n",nx," ",ny,"\n255")
 
-  world = random_scene()
+  world = two_spheres()
 
   lookfrom = Vec3(13,2,3)
   lookat = Vec3(0,0,0)

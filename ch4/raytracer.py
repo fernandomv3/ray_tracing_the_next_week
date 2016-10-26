@@ -3,7 +3,7 @@ from __future__ import print_function, division
 from vec3 import Vec3
 from ray import Ray
 from math import sqrt
-from random import random
+from random import random, seed
 from hitable import Sphere
 from hitable import MovingSphere
 from hitable import HitableList
@@ -58,6 +58,7 @@ def two_perlin_spheres():
   return HitableList(l)
 
 def main():
+  seed(50)
   nx = 200
   ny = 150
   ns = 10

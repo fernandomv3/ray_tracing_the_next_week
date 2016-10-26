@@ -3,7 +3,7 @@ from __future__ import print_function, division
 from vec3 import Vec3
 from ray import Ray
 from math import sqrt
-from random import random
+from random import random, seed
 from hitable import Sphere
 from hitable import MovingSphere
 from hitable import HitableList
@@ -46,6 +46,7 @@ def random_scene():
   l.append(Sphere(Vec3(4,1,0),1.0,Metal(Vec3(0.7,0.6,0.5),0.0)))
   return HitableList(l)
 def main():
+  seed(50)
   nx = 200
   ny = 150
   ns = 100
