@@ -1,6 +1,8 @@
+from __future__ import print_function
 from vec3 import Vec3
 from random import random
 from math import floor
+import sys
 
 def permute(p,n):
   for i in range(n-1,0,-1):
@@ -10,6 +12,7 @@ def permute(p,n):
 class Perlin:
   @staticmethod
   def perlin_generate():
+    #print("generate perlin",file=sys.stderr)
     p = []
     for i in range(0,256):
       p.append(random())
@@ -17,6 +20,7 @@ class Perlin:
 
   @staticmethod
   def perlin_generate_perm():
+    #print("generate permutation",file=sys.stderr)
     p = []
     for i in range(0,256):
       p.append(i)
@@ -36,6 +40,6 @@ class Perlin:
     i = int(4*p.x) & 255
     j = int(4*p.y) & 255
     k = int(4*p.z) & 255
-    
-    return Perlin.ranfloat[Perlin.perm_x[i] ** Perlin.perm_y[j] ** Perlin.perm_z[k]]
+    #print(Perlin.perm_x[i] ^ Perlin.perm_y[j] ^ Perlin.perm_z[k],file=sys.stderr)
+    return Perlin.ranfloat[Perlin.perm_x[i] ^ Perlin.perm_y[j] ^ Perlin.perm_z[k]]
 

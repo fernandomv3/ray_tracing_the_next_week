@@ -18,7 +18,7 @@ from texture import NoiseTexture
 def color(r,world,depth):
   rec = world.hit(r,0.001,float('inf'))
   if rec is not None:
-    if depth >= 5:
+    if depth >= 50:
       return Vec3(0,0,0)
     attenuation,scattered =rec["material"].scatter(r,rec)
     if attenuation is not None:
@@ -61,7 +61,7 @@ def main():
   seed(50)
   nx = 200
   ny = 150
-  ns = 10
+  ns = 100
   print ("P3\n",nx," ",ny,"\n255")
 
   world = two_perlin_spheres()
