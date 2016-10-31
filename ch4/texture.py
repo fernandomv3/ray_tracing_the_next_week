@@ -26,8 +26,9 @@ class CheckerTexture(Texture):
       return self.even.value(u,v,p)
 
 class NoiseTexture(Texture):
-  def __init__(self):
+  def __init__(self,sc = 1.0):
     self.noise = Perlin()
+    self.scale = sc
 
   def value(self,u,v,p):
-    return Vec3(1.0,1.0,1.0) * self.noise.noise(p)
+    return Vec3(1.0,1.0,1.0) * self.noise.noise(self.scale*p)

@@ -51,7 +51,7 @@ def random_scene():
   return HitableList(l)
 
 def two_perlin_spheres():
-  pertext = NoiseTexture()
+  pertext = NoiseTexture(5)
   l = []
   l.append(Sphere(Vec3(0,-1000,0),1000,Lambertian(pertext)))
   l.append(Sphere(Vec3(0,2,0),2,Lambertian(pertext)))
