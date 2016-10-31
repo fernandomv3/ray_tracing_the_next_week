@@ -45,6 +45,9 @@ class Perlin:
     u = p.x - floor(p.x)
     v = p.y - floor(p.y)
     w = p.z - floor(p.z)
+    u = u*u*(3-2*u)
+    v = v*v*(3-2*v)
+    w = w*w*(3-2*w)
 #
 #    i = int(4*p.x) & 255
 #    j = int(4*p.y) & 255
