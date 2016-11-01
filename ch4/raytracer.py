@@ -51,14 +51,14 @@ def random_scene():
   return HitableList(l)
 
 def two_perlin_spheres():
-  pertext = NoiseTexture(5)
+  pertext = NoiseTexture(4.0)
   l = []
   l.append(Sphere(Vec3(0,-1000,0),1000,Lambertian(pertext)))
   l.append(Sphere(Vec3(0,2,0),2,Lambertian(pertext)))
   return HitableList(l)
 
 def main():
-  seed(50)
+  seed(20)
   nx = 200
   ny = 150
   ns = 100

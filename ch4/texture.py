@@ -31,4 +31,6 @@ class NoiseTexture(Texture):
     self.scale = sc
 
   def value(self,u,v,p):
-    return Vec3(1.0,1.0,1.0) * self.noise.noise(self.scale*p)
+    #return Vec3(1.0,1.0,1.0) *0.5* (1+self.noise.turb(self.scale*p))
+    #return Vec3(1.0,1.0,1.0) * self.noise.turb(self.scale*p)
+    return Vec3(1.0,1.0,1.0) *0.5* (1+sin(self.scale * p.z + 10*self.noise.turb(p)))
